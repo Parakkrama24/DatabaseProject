@@ -208,3 +208,5 @@ alter table employee add ManegerId varchar(12) default 'MG0001';
 Alter table employee
 add constraint fk_manager_employee foreign key  (ManegerId) references employee(empl_id)
 on delete cascade on update cascade;
+
+-- ijdfjf
