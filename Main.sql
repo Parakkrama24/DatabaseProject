@@ -82,6 +82,19 @@ contact_number varchar(15) ,
 charge_per_1km double,
 primary key(vehi_number));
 
+-- weak entities 
+CREATE TABLE Rating (
+    event_id VARCHAR(12) NOT NULL,
+    rating INT CHECK (rating >= 0 AND rating <= 10),
+    PRIMARY KEY (event_id)
+);
+
+create table Feedback(
+ client_id varchar(12) not null,
+ Feedback_view varchar(500) ,
+ primary key(client_id));
+ 
+
 alter table Events_TB add Hotel_id varchar(12) default 'HT00001' not null;
 alter table Events_TB add band_id varchar(12) default 'BT00001' not null;
 alter table Events_TB add Trasportation_id varchar(12) default 'VH00001' not null;
@@ -209,4 +222,48 @@ Alter table employee
 add constraint fk_manager_employee foreign key  (ManegerId) references employee(empl_id)
 on delete cascade on update cascade;
 
--- demo 
+-- rating and event relationship 
+
+alter table rating add constraint fk_ratin_event foreign key(event_id ) references events_tb(event_id) 
+on delete cascade on update cascade;
+
+-- feedback vs client retaionship
+
+alter table feedback add constraint fk_feedBack_cliet foreign key(client_id) references clients(client_id)
+on delete cascade on update cascade;
+
+-- simple quary 
+
+
+-- select oparetion 
+
+select * from employee where isManeger= true;
+
+-- project oparation 
+select client_id , client_name, Contact_number from clients;
+
+-- cartierian product oparation
+select * from clients,booking;
+
+-- creating a user view 
+create view Booking_details as select Bookingid ,client_id ,Payment from booking;
+
+-- Reaname Oparation 
+ select empl_id as Id , Empl_name as Employee_Name , coodinator_id as C_id from employee;
+
+
+-- insert data
+
+INSERT INTO Events_TB (Event_id, E_date, E_time, Number_of_Participant, Hotel_id, band_id, Trasportation_id, Decoration_id, Phtography_id, catering, Cootdinator_id, client_id)
+VALUES
+('I_001', '2024-10-03', '16:30:00', 50, 'H0021', 'B001', 'VH00001', 'Deco_001', 'Photo_001', 'Cater_001', 'EMP_C_00001', 'Cl_0001'),
+('I_002', '2024-05-02', '17:30:00', 80, 'H0101', 'B002', 'VH00001', 'Deco_002', 'Photo_002', 'Cater_002', 'EMP_C_00001', 'Cl_0004'),
+('I_003', '2024-02-14', '17:30:00', 50, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('I_004', '2024-10-05', '08:30:00', 300, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('I_005', '2024-07-08', '13:30:00', 300, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('I_006', '2024-11-20', '11:30:00', 60, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('I_007', '2024-10-05', '15:30:00', 50, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('I_008', '2024-08-15', '08:30:00', 300, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('I_009', '2024-08-12', '08:30:00', 400, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('I_010', '2024-02-21', '17:30:00', 80, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
