@@ -92,8 +92,10 @@ CREATE TABLE Rating (
 create table Feedback(
  client_id varchar(12) not null,
  Feedback_view varchar(500) ,
- primary key(client_id));
+ primary key(client_id,feedback_view));
  
+ drop table feedback;
+
 
 alter table Events_TB add Hotel_id varchar(12) default 'HT00001' not null;
 alter table Events_TB add band_id varchar(12) default 'BT00001' not null;
@@ -232,25 +234,6 @@ on delete cascade on update cascade;
 alter table feedback add constraint fk_feedBack_cliet foreign key(client_id) references clients(client_id)
 on delete cascade on update cascade;
 
--- simple quary 
-
-
--- select oparetion 
-
-select * from employee where isManeger= true;
-
--- project oparation 
-select client_id , client_name, Contact_number from clients;
-
--- cartierian product oparation
-select * from clients,booking;
-
--- creating a user view 
-create view Booking_details as select Bookingid ,client_id ,Payment from booking;
-
--- Reaname Oparation 
- select empl_id as Id , Empl_name as Employee_Name , coodinator_id as C_id from employee;
-
 
 -- insert data
 
@@ -322,12 +305,12 @@ VALUES
 
 INSERT INTO event_employees (event_id, employee_id, employee2_id, employee3_id, employee4_id, employee5_id, employee6_id, employee7_id, employee8_id, employee9_id, employee10_id)
 VALUES
-('I_003', 'EMP_001', 'EMP_002', 'EMP_003', 'EMP_004', 'EMP_014', 'EMP_006', 'EMP_007', 'EMP_008', 'EMP_009', null),
-('I_004', 'EMP_011', 'EMP_012', 'EMP_013', 'EMP_014', 'EMP_015', 'EMP_016', 'EMP_017', 'EMP_018', 'EMP_019', null),
-('I_005', 'EMP_021', 'EMP_022', 'EMP_023', 'EMP_024', 'EMP_007', 'EMP_026', 'EMP_027', 'EMP_028', 'EMP_019', 'EMP_011'),
-('I_006', 'EMP_011', 'EMP_002', 'EMP_012', 'EMP_003', 'EMP_018', 'EMP_007', 'EMP_008', 'EMP_003', 'EMP_010', null),
-('I_007', 'EMP_001', 'EMP_015', 'EMP_002', 'EMP_006', 'EMP_011', 'EMP_022', null, null, null, null),
-('I_008', 'EMP_004', 'EMP_012', 'EMP_012', 'EMP_004', 'EMP_007', 'EMP_006', 'EMP_010', 'EMP_022', null, null);
+('E_001', 'EMP_001', 'EMP_002', 'EMP_003', 'EMP_004', 'EMP_014', 'EMP_006', 'EMP_007', 'EMP_008', 'EMP_009', null),
+('E_002', 'EMP_011', 'EMP_012', 'EMP_013', 'EMP_014', 'EMP_015', 'EMP_016', 'EMP_017', 'EMP_018', 'EMP_019', null),
+('E_003', 'EMP_021', 'EMP_022', 'EMP_023', 'EMP_024', 'EMP_007', 'EMP_026', 'EMP_027', 'EMP_028', 'EMP_019', 'EMP_011'),
+('E_004', 'EMP_011', 'EMP_002', 'EMP_012', 'EMP_003', 'EMP_018', 'EMP_007', 'EMP_008', 'EMP_003', 'EMP_010', null),
+('E_005', 'EMP_001', 'EMP_015', 'EMP_002', 'EMP_006', 'EMP_011', 'EMP_022', null, null, null, null),
+('E_006', 'EMP_004', 'EMP_012', 'EMP_012', 'EMP_004', 'EMP_007', 'EMP_006', 'EMP_010', 'EMP_022', null, null);
 
 
 INSERT INTO clients (client_id, Cilent_name, Contact_number, Home_number, streat, town, Post_office_number)
@@ -384,5 +367,171 @@ VALUES
 ('E_004', '2024-04-15', '18:00:00', 100, 'H0701', 'BT00005', 'TN00006','DC08047', 'PH00004', 'CT00006', 'EMP_C_00004', 'Cl_0004'),
 ('E_005', '2024-04-20', '19:30:00', 70, 'H0501', 'BT00003', 'TN00004','DC08046', 'PH00003', 'CT00002', 'EMP_C_00005', 'Cl_0005'),
 ('E_006', '2024-04-25', '20:45:00', 120, 'H0401', 'BT00002', 'TN00004','DC08050', 'PH00006', 'CT00006', 'EMP_C_00006', 'Cl_0006');
+
+
+INSERT INTO rating (event_id, rating)
+VALUES
+('E_001', 5),
+('E_002', 4),
+('E_003', 3),
+('E_005', 5),
+('E_004', 4),
+('E_006', 5);
+
+INSERT INTO feedback (client_id, feedback_view)
+VALUES
+('Cl_0007', 'Great event, loved the decorations!'),
+('Cl_0002', 'The catering service was exceptional.'),
+('Cl_0003', 'The transportation arrangements were smooth.'),
+('Cl_0004', 'The band performance was fantastic!'),
+('Cl_0005', 'The photography team captured amazing moments.'),
+('Cl_0006', 'The coordination team did an excellent job.'),
+('Cl_0002', 'The hotel venue was beautiful and comfortable.'),
+('Cl_0003', 'Highly recommend this event planning team!');
+
+INSERT INTO Booking (BookingId, payment, Booking_date, client_id)
+VALUES
+('E_001', 10000.00, '2024-04-01', 'Cl_0002'),
+('E_005', 15000.00, '2024-04-02', 'Cl_0003'),
+('E_006', 20000.00, '2024-04-03', 'Cl_0004'),
+('E_003', 12000.00, '2024-04-04', 'Cl_0005'),
+('E_002', 18000.00, '2024-04-05', 'Cl_0006'),
+('E_004', 25000.00, '2024-04-06', 'Cl_0007');
+
+
+-- simple quary 
+
+
+-- select oparetion 
+
+select * from employee where isManeger= true;
+
+-- project oparation 
+select client_id , client_name, Contact_number from clients;
+
+-- cartierian product oparation
+select * from clients,booking;
+
+-- creating a user view 
+create view Booking_details as select Bookingid ,client_id ,Payment from booking;
+
+-- Reaname Oparation 
+ select empl_id as Id , Empl_name as Employee_Name , coodinator_id as C_id from employee;
+
+-- Aggreation 
+select avg(rating) as Avarage_rating from rating;
+
+-- Like key word
+select * from employee where Cilent_name like 'j%';
+
+-- -- complex quary 
+-- 01 Union Operation with Aliasing:
+SELECT Event_id AS ID, E_date AS Date FROM Events_TB
+UNION
+SELECT BookingId AS ID, Booking_date AS Date FROM booking;
+
+-- 02 Intersection Operation with Aliasing:
+(SELECT Event_id AS ID, E_date AS Date FROM Events_TB)
+INTERSECT
+(SELECT BookingId AS ID, Booking_date AS Date FROM booking);
+
+-- 03 Set Difference Operation with Aliasing:
+SELECT Event_id AS ID, E_date AS Date FROM Events_TB
+EXCEPT
+SELECT BookingId AS ID, Booking_date AS Date FROM booking;
+
+--  04 Division Operation with Aliasing:
+-- SELECT empl_id AS Employee_ID
+-- FROM employee
+-- WHERE NOT EXISTS (
+--     SELECT Event_id
+--     FROM Events_TB
+--     EXCEPT
+--     SELECT Event_id
+--     FROM Event_Employees
+--     WHERE Event_Employees.Employee1_ID = employee.empl_id
+-- );
+
+-- -----------------------------
+-- 05  Inner Join with User View:
+CREATE VIEW EventBooking AS
+SELECT Event_id, BookingId
+FROM Events_TB
+INNER JOIN booking ON Events_TB.Event_id = booking.BookingId;
+
+SELECT * FROM EventBooking;
+
+
+-- 06 Natural Join with User View:
+-- CREATE VIEW EmployeeEvent AS
+-- SELECT Event_id, EmployeeID1
+-- FROM Event_Employees;
+
+-- SELECT * FROM EmployeeEvent;-
+
+-- 07 Left Outer Join with User View:
+CREATE VIEW EventClient AS
+SELECT Event_id,E_time
+FROM Events_TB
+LEFT JOIN booking ON Events_TB.Event_id = booking.BookingId;
+
+SELECT * FROM EventClient;
+
+-- 08 Right Outer Join with User View:
+CREATE VIEW ClientEvent AS
+SELECT Event_id,Number_of_Participant
+FROM Events_TB
+RIGHT JOIN booking ON Events_TB.Event_id = booking.BookingId;
+
+SELECT * FROM ClientEvent;
+
+-- 09 Full Outer Join with User View:
+CREATE VIEW FullEvent AS
+SELECT Events_TB.Event_id, booking.BookingId
+FROM Events_TB
+LEFT JOIN booking ON Events_TB.Event_id = booking.BookingId
+UNION
+SELECT Events_TB.Event_id, booking.BookingId
+FROM Events_TB
+RIGHT JOIN booking ON Events_TB.Event_id = booking.BookingId
+WHERE Events_TB.Event_id IS NULL;
+
+SELECT * FROM FullEvent;
+
+-- 10  Outer Union with User View:
+CREATE VIEW EventUnion AS
+SELECT ID, Date
+FROM (
+    SELECT Event_id AS ID, E_date AS Date FROM Events_TB
+    UNION
+    SELECT BookingId AS ID, Booking_date AS Date FROM booking
+) AS UnionQuery;
+
+SELECT * FROM EventUnion;
+
+
+-- 11 Nested Query with Union:
+
+SELECT Event_id AS ID, E_date AS Date FROM Events_TB
+WHERE Event_id IN (
+    SELECT BookingId FROM booking WHERE payment > 15000
+);
+
+-- 12 Nested Query with Join:
+SELECT E_date, Empl_name
+FROM Events_TB
+INNER JOIN (
+    SELECT Event_id, Employee_ID, Empl_name
+    FROM Event_Employees
+    INNER JOIN employee ON Event_Employees.Employee_ID = employee.empl_id
+) AS EmployeeEvent ON Events_TB.Event_id = EmployeeEvent.Event_id;
+
+-- 13 Nested Query with Set Difference:
+SELECT empl_id AS Employee_ID, Empl_name AS Employee_Name
+FROM Employee
+WHERE empl_id NOT IN (
+    SELECT employee_id FROM Event_Employees
+);
+
 
 
